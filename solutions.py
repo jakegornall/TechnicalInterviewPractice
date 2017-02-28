@@ -1,6 +1,6 @@
-from Graph import *
 from BST import *
 from LL import *
+import random
 
 def question1(s, t):
     '''
@@ -68,12 +68,45 @@ def question3(G):
 
     Input
     =====
-    G: Undirected Graph
+    G: Undirected Graph as Adjacency List
 
     Returns
     =======
-    Adjaceny List
+    Adjacency List
     '''
+    F = {}
+    Q = []
+    visited = []
+
+    for v in G.keys():
+        # add all v's to Q.
+        Q.append(v)
+        F[v] = []
+
+    start = Q[0]
+    visited.append(start)
+
+    edge = None
+    vert = None
+    while len(Q) > 0:
+        for v in visited:
+            for e in G[v]:
+                if not edge or e[1] < edge[1]:
+                    if e[0] not in visited:
+                        edge = e
+                        to_vert = e[0]
+                        from_vert = v
+        if not edge:
+            break
+        F[from_vert].append(edge)
+        F[to_vert].append((from_vert, edge[1]))
+        visited.append(to_vert)
+        Q.remove(to_vert)
+        edge = None
+        to_vert = None
+        from_vert = None
+    return F
+
 
 
 def question4(T, r, n1, n2):
@@ -164,6 +197,40 @@ print question2("hi")  # None
 
 
 print "Question 3 Test Cases:"
+print question3({
+    'A': [('B', 2)],
+    'B': [('A', 2), ('C', 5), ('D', 3)],
+    'C': [('B', 5), ('E', 6)],
+    'D': [('B', 3), ('E', 1)],
+    'E': [('D', 1), ('C', 6)]
+})
+'''
+{
+    'A': [('B', 2)],
+    'C': [('B', 5)],
+    'B': [('A', 2), ('D', 3), ('C', 5)],
+    'E': [('D', 1)],
+    'D': [('B', 3), ('E', 1)]
+}
+'''
+print question3({
+    'A': [('B', 1), ('C', 1), ('E', 2)],
+    'B': [('A', 1), ('C', 1), ('D', 3)],
+    'C': [('A', 1), ('B', 1), ('D', 4)],
+    'D': [('B', 3), ('C', 4), ('E', 6), ('F', 7)],
+    'E': [('A', 2), ('D', 6)],
+    'F': [('D', 7)]
+    })
+'''
+{
+    'A': [('B', 1), ('C', 1), ('E', 2)],
+    'C': [('A', 1)],
+    'B': [('A', 1), ('D', 3)],
+    'E': [('A', 2)],
+    'D': [('B', 3), ('F', 7)],
+    'F': [('D', 7)]
+}
+'''
 
 print "Question 4 Test Cases:"
 print question4([[0, 1, 0, 0, 0],
