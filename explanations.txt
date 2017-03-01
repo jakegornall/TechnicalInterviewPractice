@@ -1,0 +1,17 @@
+Q1:
+First thing I want to rule out is when t is longer than s. If this is the case, there is no way for the s to contain all letters of t.
+So I return False if t is longer than s. If not, we move on to searching for any anagram of t in s.
+For each letter in s, we are going to check if it is in t. If so, we remove that letter from t and move on to the next letter in s.
+if the next letter is t, we remove it from t and move on to the next letter in s. We repeat this process until either all letters in
+t are gone, in which case we return True, or until a letter is not in t and we reset t to it's original state. If we get through all
+letters in s without depleating t, then we return False for there is no anagram of t in s.
+The runtime of this algorithm is at best O(1) where t is longer then s and at worst O(n) where n is the number of letters in s.
+
+Q2:
+For this question I was able to use an algorithm that looped at most n times where n is the length of a.
+Within each loop I check the front of the word and the back of the word to see if it matches it's reversed self.
+If so, we return True. If we complete the for loop without finding a palindrome, we return False.
+The runtime is at best O(1) where we find the palindrome on the first try and O(n) where we don't find the palindrome
+and loop through the entire length of a.
+
+Q3:
