@@ -74,21 +74,19 @@ def question3(G):
     =======
     Adjacency List
     '''
-    F = {}
-    Q = []
+    F = {}  # stores final adjacency list.
     visited = []
 
     for v in G.keys():
-        # add all v's to Q.
-        Q.append(v)
+        # initialize F with all keys, v, being set to empty lists.
         F[v] = []
 
-    start = Q[0]
-    visited.append(start)
+    # pick an arbitary node to start the process.
+    visited.append(random.choice(G.keys()))
 
     edge = None
     vert = None
-    while len(Q) > 0:
+    while len(visited) < len(G):
         for v in visited:
             for e in G[v]:
                 if not edge or e[1] < edge[1]:
@@ -101,7 +99,6 @@ def question3(G):
         F[from_vert].append(edge)
         F[to_vert].append((from_vert, edge[1]))
         visited.append(to_vert)
-        Q.remove(to_vert)
         edge = None
         to_vert = None
         from_vert = None

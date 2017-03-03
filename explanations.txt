@@ -15,3 +15,28 @@ The runtime is at best O(1) where we find the palindrome on the first try and O(
 and loop through the entire length of a.
 
 Q3:
+In question 3 I ended up using Prim's Algorithm. I knew I was going to need a dictionary (F) to hold the final adjacency list and 
+a list (visited) to hold visited nodes. Then, we initialize F with a for loop to give F all keys representing each node in G.
+We then choose a random node to start searching with random.choice(). We then repeat the following steps until our visited list
+contains all nodes and our MST is fully built:
+1. of the edges attached to our nodes in the visited list, we find one with the smallest weight who is attached to a non-visited node.
+2. if found, we add that edge to both of it's attached nodes in F and put the new node in the visited list.
+3. if not found, this means that our tree is finished. If visited does not contain all the nodes, it means that there were nodes detached
+from the graph.
+The runtime of this algorithm is O(|E|log|V|).
+
+Q4:
+For question 4 I built a BST class to help me out. First thing we do is create a new BST instance called "tree" by passing in the matrix (T)
+and the root node (r). The constructor for the BST class creates a new BST node for root and calls the build_tree method on T. The build_tree()
+method recursively creates new nodes based on the information in the given matrix. Once the tree is built, we can begin finding the answer to
+question 3. First, we call the method ancesstor_list() on both n1 and n2. This method uses the ancesstor() method in a loop to build a sorted
+list of ancesstors. Once we have the lists for both n1 and n2, we loop through the lists checking to see if the current node is in other opposite list.
+The first node we find (since the list is sorted) that is present in the opposing list is the least common ancesstor.
+The runtime of this algorithm is O(n^2) since we have to loop through each index of each node in the matrix (T). 
+
+Q5:
+First we check to make sure our input is present. Then we need to figure out how long the list is. We use a while loop to keep moving through the list.
+Each iteration we add 1 to our listLen variable. When no "next" node is found, we have reach the end of the list. Now we can subtract m listLen to find
+out which node we need to retrieve. We'll store this number in nodeToReturn. We can use a while loop to iterate through the list until we find the node we
+are looking for.
+The runtime's worst case is O(2n).
