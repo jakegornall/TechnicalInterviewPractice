@@ -1,6 +1,7 @@
 from BST import *
 from LL import *
 import random
+import unittest
 
 def question1(s, t):
     '''
@@ -17,8 +18,6 @@ def question1(s, t):
     =======
     Boolean
     '''
-    letterPos = []
-
     if len(t) > len(s):
         return False
     
@@ -179,105 +178,133 @@ def question5(ll, m):
 ################
 ## UNIT TESTS ##
 ################
-print "Question 1 Test Cases:"
-print question1("udacity", "ad")  # True
-print question1("udacity", "tcd")  # False
-print question1("udacity", "ycit")  # True
-print question1("udacity", "udacitygreat")  # False
+class UnitTests(unittest.TestCase):
+    def test1(self):
+        self.assertTrue(question1("udacity", "ad"))
+        self.assertFalse(question1("udacity", "tcd"))
+        self.assertTrue(question1("udacity", "ycit"))
+        self.assertFalse(question1("udacity", "udacitygreat"))
 
 
-print "Question 2 Test Cases:"
-print question2("abcba")  # "abcba"
-print question2("aedbdeayou")  # "aedbdea"
-print question2("iciiceci")  # "iceci"
-print question2("hi")  # None
+    def test2(self):
+        self.assertEqual(question2("abcba"), "abcba")
+        self.assertEqual(question2("aedbdeayou"), "aedbdea")
+        self.assertEqual(question2("iciiceci"), "iceci")
+        self.assertEqual(question2("hi"), None)
 
 
-print "Question 3 Test Cases:"
-print question3({
-    'A': [('B', 2)],
-    'B': [('A', 2), ('C', 5), ('D', 3)],
-    'C': [('B', 5), ('E', 6)],
-    'D': [('B', 3), ('E', 1)],
-    'E': [('D', 1), ('C', 6)]
-})
-'''
-{
-    'A': [('B', 2)],
-    'C': [('B', 5)],
-    'B': [('A', 2), ('D', 3), ('C', 5)],
-    'E': [('D', 1)],
-    'D': [('B', 3), ('E', 1)]
-}
-'''
-print question3({
-    'A': [('B', 1), ('C', 1), ('E', 2)],
-    'B': [('A', 1), ('C', 1), ('D', 3)],
-    'C': [('A', 1), ('B', 1), ('D', 4)],
-    'D': [('B', 3), ('C', 4), ('E', 6), ('F', 7)],
-    'E': [('A', 2), ('D', 6)],
-    'F': [('D', 7)]
-    })
-'''
-{
-    'A': [('B', 1), ('C', 1), ('E', 2)],
-    'C': [('A', 1)],
-    'B': [('A', 1), ('D', 3)],
-    'E': [('A', 2)],
-    'D': [('B', 3), ('F', 7)],
-    'F': [('D', 7)]
-}
-'''
+    def test3(self):
+        self.assertEqual(
+            question3({
+                'A': [('B', 2)],
+                'B': [('A', 2), ('C', 5), ('D', 3)],
+                'C': [('B', 5), ('E', 6)],
+                'D': [('B', 3), ('E', 1)],
+                'E': [('D', 1), ('C', 6)]
+            }),
+            {
+                'A': [('B', 2)],
+                'C': [('B', 5)],
+                'B': [('A', 2), ('D', 3), ('C', 5)],
+                'E': [('D', 1)],
+                'D': [('B', 3), ('E', 1)]
+            }
+        )
+        self.assertEqual(
+            question3({
+                'A': [('B', 1), ('C', 1), ('E', 2)],
+                'B': [('A', 1), ('C', 1), ('D', 3)],
+                'C': [('A', 1), ('B', 1), ('D', 4)],
+                'D': [('B', 3), ('C', 4), ('E', 6), ('F', 7)],
+                'E': [('A', 2), ('D', 6)],
+                'F': [('D', 7)]
+            }),
+            {
+                'A': [('B', 1), ('C', 1), ('E', 2)],
+                'C': [('A', 1)],
+                'B': [('A', 1), ('D', 3)],
+                'E': [('A', 2)],
+                'D': [('B', 3), ('F', 7)],
+                'F': [('D', 7)]
+            }
+        )
 
-print "Question 4 Test Cases:"
-print question4([[0, 1, 0, 0, 0],
-                 [0, 0, 0, 0, 0],
-                 [0, 0, 0, 0, 0],
-                 [1, 0, 0, 0, 1],
-                 [0, 0, 0, 0, 0]],
-                 3,
-                 1,
-                 4) # 3
-print question4([[0, 1, 0, 0, 0],
-                 [0, 0, 0, 0, 0],
-                 [0, 0, 0, 0, 0],
-                 [1, 0, 0, 0, 1],
-                 [0, 0, 0, 0, 0]],
-                 3,
-                 1,
-                 5) # None
-print question4([[0, 0, 0, 0, 0, 0, 0],
-                 [1, 0, 0, 0, 0, 0, 0],
-                 [0, 1, 0, 1, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 0],
-                 [0, 0, 1, 0, 0, 0, 1],
-                 [0, 0, 0, 0, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 1, 0]],
-                 4,
-                 0,
-                 3) # 2
-print question4([[0, 0, 0, 0, 0, 0, 0],
-                 [1, 0, 0, 0, 0, 0, 0],
-                 [0, 1, 0, 1, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 0],
-                 [0, 0, 1, 0, 0, 0, 1],
-                 [0, 0, 0, 0, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 1, 0]],
-                 4,
-                 2,
-                 5) # 4
+    def test4(self):
+        self.assertEqual(
+            question4([
+                [0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [1, 0, 0, 0, 1],
+                [0, 0, 0, 0, 0]],
+                3,
+                1,
+                4
+            ),
+                3
+        )
+        self.assertEqual(
+            question4([
+                [0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [1, 0, 0, 0, 1],
+                [0, 0, 0, 0, 0]],
+                3,
+                1,
+                5
+            ),
+                None
+        )
+        self.assertEqual(
+            question4([
+                [0, 0, 0, 0, 0, 0, 0],
+                [1, 0, 0, 0, 0, 0, 0],
+                [0, 1, 0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0, 0, 1],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 0]],
+                4,
+                0,
+                3
+            ),
+                2
+        )
+        self.assertEqual(
+            question4([
+                [0, 0, 0, 0, 0, 0, 0],
+                [1, 0, 0, 0, 0, 0, 0],
+                [0, 1, 0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0, 0, 1],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 0]],
+                4,
+                2,
+                5
+            ),
+                4
+        )
 
-print "Question 5 Test Cases:"
-N1 = Node("data1")
-N2 = Node("data2")
-N3 = Node("data3")
-N4 = Node("data4")
-N5 = Node("data5")
-N1.next = N2
-N2.next = N3
-N3.next = N4
-N4.next = N5
-print question5(N1, 3)  # data3
-print question5(N1, 6)  # None
-print question5(N1, 5)  # data1
-print question5(None, None)  # None
+
+    N1 = Node("data1")
+    N2 = Node("data2")
+    N3 = Node("data3")
+    N4 = Node("data4")
+    N5 = Node("data5")
+    N1.next = N2
+    N2.next = N3
+    N3.next = N4
+    N4.next = N5
+
+
+    def test5(self):
+        self.assertEqual(question5(N1, 3), "data3")
+        self.assertEqual(question5(N1, 6), None)
+        self.assertEqual(question5(N1, 5), "data1")
+        self.assertEqual(question5(None, None), None)
+
+
+if __name__ == '__main__':
+    unittest.main()
