@@ -23,10 +23,16 @@ def question1(s, t):
     
     tempT = t
     for letter in s:
+        # tempT holds our string t.
+        # we remove letters from tempT as we find them
+        # consecutively in s.
         if letter in tempT:
             tempT = tempT.replace(letter, "")
+            # we know we have found an anagram of t 
+            # when all letters of tempT are gone.
             if len(tempT) == 0: return True
         else:
+            # If a letter is not found, we reset tempT to t.
             tempT = t
 
     return False
@@ -46,8 +52,12 @@ def question2(a):
     '''
     result = ""
     for x in xrange(len(a)):
-        testFront = a[:len(a) - x]
-        testBack = a[x:]
+        testFront = a[:len(a) - x]  # we remove x letters from end of a.
+        testBack = a[x:]  # we remove x letters from front of a.
+
+        # flip both testFront and testBack to see if they are palindromic.
+        # if they are also longer than the current result and 
+        # longer than 1, store them in result.
         if testFront == testFront[::-1] and len(testFront) > len(result) and len(testFront) > 1:
             result = testFront
         if testBack == testBack[::-1] and len(testBack) > len(result) and len(testBack) > 1:
@@ -86,21 +96,33 @@ def question3(G):
     edge = None
     vert = None
     while len(visited) < len(G):
+        # repeat this loop until all nodes are visited.
         for v in visited:
             for e in G[v]:
+                # check all viable edges of visited nodes.
+                # find the edge with least weight that leads
+                # to an unvisited node.
                 if not edge or e[1] < edge[1]:
                     if e[0] not in visited:
                         edge = e
                         to_vert = e[0]
                         from_vert = v
+        # if no edge is found, break the loop.
+        # this is for cases where a node is detached from the graph.
         if not edge:
             break
+        # add smallest edge to F.
         F[from_vert].append(edge)
         F[to_vert].append((from_vert, edge[1]))
+
+        # append the unvisited node from our smallest edge to the visited list.
         visited.append(to_vert)
+
+        # reset edge variables.
         edge = None
         to_vert = None
         from_vert = None
+
     return F
 
 
@@ -124,17 +146,34 @@ def question4(T, r, n1, n2):
     =======
     Integer representing the least common ancestor.
     '''
-    tree = BST(r, T)
-    n1Ancesstors = tree.ancesstor_list(n1)
-    n2Ancesstors = tree.ancesstor_list(n2)
-    i = 0
-    while i < len(n1Ancesstors) and i < len(n2Ancesstors):
-        if n1Ancesstors[i] in n2Ancesstors:
-            return n1Ancesstors[i]
-        if n2Ancesstors[i] in n1Ancesstors:
-            return n2Ancesstors[i]
-        i += 1
-    return None
+     
+    # make sure r is given.
+    if r == None:
+        return None
+
+    # determines left and right nodes of r.
+    left = None
+    right = None
+    for idx, n in enumerate(T[r]):
+        if n == 1:
+            if idx > r:
+                right = idx
+            else:
+                left = idx
+        # if both left and right found, discontinue loop.
+        if left and right:
+            break
+ 
+    # If both n1 and n2 are greater than r, then the LCA is right 
+    if(r < n1 and r < n2):
+        return question4(T, right, n1, n2)
+
+    # If both n1 and n2 are smaller than r, then the LCA is left.
+    if(r > n1 and r > n2):
+        return question4(T, left, n1, n2)
+ 
+    # if neither above cases are true, we found the LCA.
+    return root
 
 
 def question5(ll, m):

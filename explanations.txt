@@ -26,13 +26,14 @@ from the graph.
 The runtime of this algorithm is O(|E|log|V|).
 
 Q4:
-For question 4 I built a BST class to help me out. First thing we do is create a new BST instance called "tree" by passing in the matrix (T)
-and the root node (r). The constructor for the BST class creates a new BST node for root and calls the build_tree method on T. The build_tree()
-method recursively creates new nodes based on the information in the given matrix. Once the tree is built, we can begin finding the answer to
-question 3. First, we call the method ancesstor_list() on both n1 and n2. This method uses the ancesstor() method in a loop to build a sorted
-list of ancesstors. Once we have the lists for both n1 and n2, we loop through the lists checking to see if the current node is in other opposite list.
-The first node we find (since the list is sorted) that is present in the opposing list is the least common ancesstor.
-The runtime of this algorithm is O(n^2) since we have to loop through each index of each node in the matrix (T). 
+For question 4 we first check to make sure a root node is given. Then we determine the left and right nodes by looping through T[r]. If
+we find both left and right we can break from the loop. Now we check if r is less than both n1 and n2. if so we know that the LCA is on 
+the right and we can recursively run the function question4() with right as the input for r. If false, we check if r is more than both
+n1 and n2. If so we recursively run question4() with left as r. In the case that r is great than one and less than the other, we know
+we have found the LCA. Since this is the only remaining case, we can simply return node if the program makes it that far into the function.
+The maximum number of times the function can be called is L-1 (where L is the number of levels in the tree) in the case of the LCA being the 
+second to last level. Each function call iterates through r's list which contains n elements.
+Therefore, the runtime is O((L-1)n).
 
 Q5:
 First we check to make sure our input is present. Then we need to figure out how long the list is. We use a while loop to keep moving through the list.
